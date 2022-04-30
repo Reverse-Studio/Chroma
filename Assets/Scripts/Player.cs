@@ -6,7 +6,6 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float JumpPower;
-    public bool IsSliding;
     public int Health;
     private Animator animator;
     private Rigidbody rigid;
@@ -47,6 +46,8 @@ public class Player : MonoBehaviour
 
     private float planeDistance;
     private bool jump;
+    private bool slide;
+    private NoteTypes[] enteredNotes = new NoteTypes[4];
 
     void Start()
     {
@@ -57,13 +58,24 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        jump = Input.GetKey(KeyCode.UpArrow);
+        jump = Input.GetKeyDown(KeyCode.UpArrow);
+        slide = Input.GetKeyDown(KeyCode.DownArrow);
     }
 
     void FixedUpdate()
     {
-        Distancing();
         DoJump();
+        DoSlide();
+    }
+
+    private void DoSlide()
+    {
+        if (IsRunning && slide && enteredNotes[1] != null)
+        {
+            Destroy(enteredNotes[1].gameObject);
+            enteredNotes[1] = null;
+            animator.SetTrigger("DoSlide");
+        }
     }
 
     private void Distancing()
@@ -79,16 +91,39 @@ public class Player : MonoBehaviour
         {
             PlaneDistance = 0f;
             IsJumping = false;
+
             rigid.velocity = Vector3.zero;
         }
     }
 
     private void DoJump()
     {
-        if (IsRunning && jump && IsJumping == false)
+        Distancing();
+
+        if (IsRunning && jump && IsJumping == false && enteredNotes[2] != null)
         {
+            Destroy(enteredNotes[2].gameObject);
+            enteredNotes[2] = null;
             rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
             IsJumping = true;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("note"))
+        {
+            NoteTypes types = other.GetComponent<NoteTypes>();
+            enteredNotes[types.type] = types;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("note"))
+        {
+            NoteTypes types = other.GetComponent<NoteTypes>();
+            enteredNotes[types.type] = null;
         }
     }
 }
