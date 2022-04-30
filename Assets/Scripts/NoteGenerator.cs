@@ -13,7 +13,7 @@ public class NoteGenerator : MonoBehaviour
 
     public Transform noteObj;
 
-    public string timeReset = "y";
+    public bool timeReset = true;
 
     public float yPos;
 
@@ -21,38 +21,44 @@ public class NoteGenerator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timeReset == "y")
+        if (timeReset == true)
         {
             StartCoroutine(spawnNote());
-            timeReset = "n";
+            timeReset = false;
         }
     }
 
     IEnumerator spawnNote()
     {
         yield return new WaitForSeconds(1);
-
-        if (notePos[noteMark] == 1)
+        if (noteMark >= notePos.Count)
         {
-            yPos = .38f;
+            timeReset = false;
         }
-
-        if (notePos[noteMark] == 2)
+        else
         {
-            yPos = 1.48f;
-        }
+            timeReset = true;
 
-        if (notePos[noteMark] == 3)
-        {
-            yPos = 2.45f;
-        }
-        timeReset = "y";
+            if (notePos[noteMark] == 1)
+            {
+                yPos = .38f;
+            }
 
-        Transform note = Instantiate(noteObj, new Vector3(6.2f, yPos, -2), noteObj.rotation);
-        NoteTypes types = note.gameObject.AddComponent<NoteTypes>();
-        types.type = notePos[noteMark];
-        note.parent = GameObject.Find("Note").transform;
-        notes.Add(note.gameObject);
-        noteMark += 1;
+            if (notePos[noteMark] == 2)
+            {
+                yPos = 1.48f;
+            }
+
+            if (notePos[noteMark] == 3)
+            {
+                yPos = 2.45f;
+            }
+            Transform note = Instantiate(noteObj, new Vector3(6.2f, yPos, 0), noteObj.rotation);
+            NoteTypes types = note.gameObject.AddComponent<NoteTypes>();
+            types.type = notePos[noteMark];
+            note.parent = GameObject.Find("Note").transform;
+            notes.Add(note.gameObject);
+            noteMark += 1;
+        }
     }
 }
