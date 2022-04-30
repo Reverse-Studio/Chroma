@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NOte : MonoBehaviour
+public class NoteGenerator : MonoBehaviour
 {
 
     List<float> notePos = new List<float>() { 1, 2, 2, 1, 3, 1, 2, 3, 2, 3, 1, 2, 3, 1, 3, 1, 2, 3, 3, 2, 3, 1, 2, 3, 1, 3, 2, 3, 1, 3, 2, 1, 2, 1, 3, 1, 2 };
 
-    public List<GameObject> notes = new List<GameObject>();
+    public static  List<GameObject> notes = new List<GameObject>();
 
     public float noteSpeed;
 
