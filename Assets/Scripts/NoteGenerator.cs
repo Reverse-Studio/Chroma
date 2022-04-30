@@ -5,11 +5,9 @@ using UnityEngine;
 public class NoteGenerator : MonoBehaviour
 {
 
-    List<float> notePos = new List<float>() { 1, 2, 2, 1, 3, 1, 2, 3, 2, 3, 1, 2, 3, 1, 3, 1, 2, 3, 3, 2, 3, 1, 2, 3, 1, 3, 2, 3, 1, 3, 2, 1, 2, 1, 3, 1, 2 };
+    List<int> notePos = new List<int>() { 1, 2, 2, 1, 3, 1, 2, 3, 2, 3, 1, 2, 3, 1, 3, 1, 2, 3, 3, 2, 3, 1, 2, 3, 1, 3, 2, 3, 1, 3, 2, 1, 2, 1, 3, 1, 2 };
 
     public static  List<GameObject> notes = new List<GameObject>();
-
-    public float noteSpeed;
 
     public int noteMark = 0;
 
@@ -27,11 +25,6 @@ public class NoteGenerator : MonoBehaviour
         {
             StartCoroutine(spawnNote());
             timeReset = "n";
-        }
-
-        foreach (var note in notes)
-        {
-            note.transform.position -= new Vector3(noteSpeed, 0f, 0f);
         }
     }
 
@@ -53,8 +46,13 @@ public class NoteGenerator : MonoBehaviour
         {
             yPos = 2.45f;
         }
-        noteMark += 1;
         timeReset = "y";
-        notes.Add(Instantiate(noteObj, new Vector3(6.2f, yPos,-2), noteObj.rotation).gameObject);
+
+        Transform note = Instantiate(noteObj, new Vector3(6.2f, yPos, -2), noteObj.rotation);
+        NoteTypes types = note.gameObject.AddComponent<NoteTypes>();
+        types.type = notePos[noteMark];
+        note.parent = GameObject.Find("Note").transform;
+        notes.Add(note.gameObject);
+        noteMark += 1;
     }
 }
