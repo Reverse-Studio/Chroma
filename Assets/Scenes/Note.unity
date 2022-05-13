@@ -132,6 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9661223}
+  - component: {fileID: 9661222}
   m_Layer: 0
   m_Name: NoteManager
   m_TagString: Untagged
@@ -139,6 +140,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9661222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9661221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96e754395f06af48a0b02a90b5ab18a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  note: {fileID: 8102941774385765103, guid: ba37dba3794a02a40bc8a6ca72d8f468, type: 3}
+  type: 0
 --- !u!4 &9661223
 Transform:
   m_ObjectHideFlags: 0
