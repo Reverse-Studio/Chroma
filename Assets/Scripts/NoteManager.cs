@@ -9,23 +9,23 @@ public class NoteManager : MonoBehaviour
 
     public GameObject note;
     float xPos;
-    public int type;
-    public float speed;
+    Note noteCs;
 
     void Awake()
     {
-        speed = 10f;
+        noteCs = GameObject.Find("Note").GetComponent<Note>();
+        noteCs.speed = 10f;
         noteGenerator(note);
     }
 
     void FixedUpdate()
     {
-       
+        Debug.Log(noteCs.type);
     }
 
     public void noteGenerator(GameObject note)
     {
         Instantiate(note, new Vector3(6.4f, 0, 0), Quaternion.identity);
-        type = 1;    
+        noteCs.type = 1;    
     }
 }
