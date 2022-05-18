@@ -4,14 +4,12 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
-    NoteManager manager;
+    public float speed = 1f;
 
-    private void Start()
-    {
-        manager = GameObject.Find("NoteManager").GetComponent<NoteManager>();
-    }
+    public int type;
+   
     private void Update()
     {
-        transform.position -= new Vector3(manager.speed * Time.deltaTime, 0f, 0f);
+        transform.position -= new Vector3(speed * Time.deltaTime, 0f, 0f);
     }
 }
