@@ -44,8 +44,17 @@ public class Player : MonoBehaviour
         }
     }
 
+    public bool IsRolling
+    {
+        get
+        {
+            return animator.GetCurrentAnimatorClipInfo(0)[0].clip.name == "Rolling";
+        }
+    }
+
     private float planeDistance;
     private bool jump;
+    private bool roll;
 
     void Start()
     {
@@ -57,12 +66,16 @@ public class Player : MonoBehaviour
     void Update()
     {
         jump = Input.GetKey(KeyCode.UpArrow);
+        roll = Input.GetKey(KeyCode.DownArrow);
     }
 
     void FixedUpdate()
     {
+        animator.ResetTrigger("DoSlide");
         Distancing();
+
         DoJump();
+        DoRoll();
     }
 
     private void Distancing()
@@ -84,10 +97,19 @@ public class Player : MonoBehaviour
 
     private void DoJump()
     {
-        if (IsRunning && jump && IsJumping == false)
+        if (IsRunning && jump && !IsJumping && !IsRolling)
         {
             rigid.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
             IsJumping = true;
+        }
+    }
+
+    private void DoRoll()
+    {
+        if (IsRunning && roll && !IsRolling && !IsJumping)
+        {
+            animator.SetTrigger("DoSlide");
+            Debug.Log("ROLL!");
         }
     }
 }

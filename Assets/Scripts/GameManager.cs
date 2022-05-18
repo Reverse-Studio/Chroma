@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
 
         player = playerObject.AddComponent<Player>();
 
-        player.JumpPower = 10;
+        player.JumpPower = 7.5f;
     }
 
     private void Update()
