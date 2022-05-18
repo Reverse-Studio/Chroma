@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    void Start()
+    private GameObject floor;
+    public Player player;
+    private void Start()
     {
+        floor = GameObject.CreatePrimitive(PrimitiveType.Plane);
+        floor.tag = "Plane";
 
+        var playerObject = Resources.Load<GameObject>("Prefabs/Player/Player");
+        playerObject = Instantiate(playerObject, Vector3.zero, Quaternion.Euler(0, 90f, 0));
+
+        player = playerObject.AddComponent<Player>();
+
+        player.JumpPower = 10;
     }
 
-    void Update()
+    private void Update()
     {
 
     }

@@ -6,26 +6,50 @@ using System.IO;
 
 public class NoteManager : MonoBehaviour
 {
-
-    public GameObject note;
-    float xPos;
+    List<int> notes = new List<int>{ 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2 };
+    GameObject note;
+    float yPos = 0;
     Note noteCs;
+    public int noteMark = 0;
+    public string timeReset = "y";
 
-    void Awake()
+    void Start()
     {
-        noteCs = GameObject.Find("Note").GetComponent<Note>();
-        noteCs.speed = 10f;
-        noteGenerator(note);
-    }
+        note = Resources.Load<GameObject>("Prefabs/Note/note");
 
+    }       
+
+    private void Update()
+    {
+        if (timeReset == "y")
+        {
+            StartCoroutine(noteGenerator());
+            timeReset = "n";
+        }
+    }
     void FixedUpdate()
     {
-        Debug.Log(noteCs.type);
+    
     }
 
-    public void noteGenerator(GameObject note)
+    IEnumerator noteGenerator()
     {
-        Instantiate(note, new Vector3(6.4f, 0, 0), Quaternion.identity);
-        noteCs.type = 1;    
+        yield return new WaitForSeconds(1);
+
+        if (notes[noteMark] == 1)
+            yPos = 1f;
+
+        if (notes[noteMark] == 2)
+            yPos = 5f;
+
+
+        noteMark += 1;
+        timeReset = "y";
+        Instantiate(note, new Vector3(10.8f, yPos, 0f), transform.rotation);
+    }
+
+    public void Destroy()
+    {
+        
     }
 }
