@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
     public Player player;
     private void Start()
     {
+        PlayerInit();
+        CameraInit();
+    }
+
+    private void PlayerInit()
+    {
         var playerObject = Resources.Load<GameObject>("Prefabs/Player/Player");
         playerObject = Instantiate(playerObject, Vector3.zero, Quaternion.Euler(0, 90f, 0));
 
@@ -15,6 +21,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = new Vector3(10f, 0, -230f);
 
         player.JumpPower = 7.5f;
+
         player.ways = new Vector3[]{
             new Vector3(11f, 0, -231f),
             new Vector3(11f, 0, -66f),
@@ -23,7 +30,10 @@ public class GameManager : MonoBehaviour
         };
 
         player.speed = 10f;
+    }
 
+    private void CameraInit()
+    {
         CameraMove cameraMove = Camera.main.gameObject.AddComponent<CameraMove>();
         cameraMove.player = player.transform;
     }

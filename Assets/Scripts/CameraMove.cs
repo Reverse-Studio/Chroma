@@ -9,6 +9,12 @@ public class CameraMove : MonoBehaviour
 
     void Update()
     {
+        Follow();
+        ObjectInvisible();
+    }
+
+    private void Follow()
+    {
         float angle = (player.rotation.eulerAngles.y + 80) * Mathf.Deg2Rad;
 
         float x = Mathf.Cos(angle);
@@ -18,5 +24,25 @@ public class CameraMove : MonoBehaviour
         transform.position += (ToGo - transform.position) * Time.deltaTime;
 
         transform.LookAt(player);
+    }
+
+    private void ObjectInvisible()
+    {
+        Vector3 angle = transform.forward;
+        Vector3 pos = transform.position;
+        float distance = Vector3.Distance(player.position, pos);
+
+
+        Debug.DrawRay(pos, angle, Color.green, 0.1f);
+
+        RaycastHit ray;
+
+        if (Physics.Raycast(pos, angle, out ray, distance, LayerMask.GetMask("Object")))
+        {
+            GameObject touchedObject = ray.collider.gameObject;
+            Renderer renderer = touchedObject.GetComponent<Renderer>();
+
+            renderer.enabled = false;
+        }
     }
 }
