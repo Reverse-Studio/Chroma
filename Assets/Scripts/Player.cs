@@ -9,6 +9,11 @@ public class Player : MonoBehaviour
     public int Health;
     private Animator animator;
     private Rigidbody rigid;
+    public float speed;
+    public Vector3[] ways;
+    private Queue<Vector3> waypoint;
+
+    private Vector3 point;
 
     //바닥과의 거리
     public float PlaneDistance
@@ -60,6 +65,15 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+
+        waypoint = new Queue<Vector3>();
+
+        foreach (Vector3 way in ways)
+        {
+            waypoint.Enqueue(way);
+        }
+
+        point = waypoint.Dequeue();
     }
 
 
@@ -67,6 +81,23 @@ public class Player : MonoBehaviour
     {
         jump = Input.GetKey(KeyCode.UpArrow);
         roll = Input.GetKey(KeyCode.DownArrow);
+
+        float distance = Vector3.Distance(transform.position, point);
+
+        if (distance < 1 && waypoint.Count != 0)
+        {
+            point = waypoint.Dequeue();
+        }
+
+        Vector3 to = transform.position - point;
+        to.Normalize();
+
+        float y = Mathf.Atan2(to.x, to.z) * Mathf.Rad2Deg - 180;
+
+        transform.rotation = Quaternion.Euler(0, y, 0);
+
+        to *= speed * Time.deltaTime;
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
     void FixedUpdate()
@@ -76,6 +107,8 @@ public class Player : MonoBehaviour
 
         DoJump();
         DoRoll();
+
+        Debug.Log(PlaneDistance);
     }
 
     private void Distancing()
@@ -83,7 +116,7 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down, Color.green, 1f);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, LayerMask.GetMask("Floor")))
         {
             PlaneDistance = hit.distance;
         }
