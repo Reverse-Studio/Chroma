@@ -1,51 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using System.IO;
 
 public class NoteManager : MonoBehaviour
 {
-    List<int> notes = new List<int>{ 1, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2 };
+    List<Vector3> Pos = new List<Vector3> {
+        new Vector3(11, -0.195f, -168),
+        new Vector3(11, 2, -153), 
+        new Vector3(11, 2, -148),
+        new Vector3(11, -0.195f, -139), 
+        new Vector3(11, 2, -135),
+        new Vector3(11, 2, -130),
+        new Vector3(11, -0.195f, -125),
+        new Vector3(11, 2, -120),
+        new Vector3(11, 2, -118),
+        new Vector3(11, -0.195f, -117),
+        new Vector3(11, 2, -115),
+        new Vector3(11, 2, -110)
+    };
+    List<int> notes = new List<int>{ 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2};
     GameObject note;
-    float yPos = 0;
-    Note noteCs;
     public int noteMark = 0;
-    public string timeReset = "y";
 
     void Start()
     {
         note = Resources.Load<GameObject>("Prefabs/Note/note");
-
+        StartCoroutine(noteGenerator());
     }       
-
-    private void Update()
-    {
-        if (timeReset == "y")
-        {
-            StartCoroutine(noteGenerator());
-            timeReset = "n";
-        }
-    }
-    void FixedUpdate()
-    {
-    
-    }
-
+   
     IEnumerator noteGenerator()
     {
-        yield return new WaitForSeconds(1);
+        foreach(Vector3 vector in Pos)
+        {
+            yield return new WaitForSeconds(0.5f);
 
-        if (notes[noteMark] == 1)
-            yPos = 1f;
+                        
 
-        if (notes[noteMark] == 2)
-            yPos = 5f;
-
-
-        noteMark += 1;
-        timeReset = "y";
-        Instantiate(note, new Vector3(10.8f, yPos, 0f), transform.rotation);
+            GameObject gen =  Instantiate(note, vector, transform.rotation);
+            Note noteCs = gen.AddComponent<Note>();
+            noteCs.type = notes[noteMark];
+            noteMark += 1;
+        }
     }
 
     public void Destroy()
