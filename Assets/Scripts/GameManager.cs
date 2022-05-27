@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     private GameObject floor;
     public Player player;
+    public NoteManager noteManager;
+
     private void Start()
     {
         PlayerInit();

@@ -5,4 +5,12 @@ using UnityEngine;
 public class Note : MonoBehaviour
 {
     public int type = 0;
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other is SphereCollider)
+        {
+            Destroy(this.gameObject);
+        }
+    }
 }

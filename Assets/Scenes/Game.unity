@@ -45615,7 +45615,7 @@ Camera:
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 5
   m_Depth: -1
   m_CullingMask:
@@ -85949,8 +85949,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c96e754395f06af48a0b02a90b5ab18a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  noteMark: 0
-  timeReset: y
 --- !u!4 &1881846597
 Transform:
   m_ObjectHideFlags: 0
@@ -85963,7 +85961,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1883430419
 PrefabInstance:
@@ -87228,6 +87226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  noteManager: {fileID: 0}
 --- !u!4 &1917626126
 Transform:
   m_ObjectHideFlags: 0
@@ -93877,7 +93876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BGM: {fileID: 8300000, guid: 4f8e79ec34e6e094b92bd67eb1f8dcd9, type: 3}
-  Song: {fileID: 0}
+  Song: {fileID: 2108289107}
   LowPitchRange: 0.95
   HighPitchRange: 1.05
 --- !u!4 &2108289106
@@ -93892,7 +93891,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &2108289107
 AudioSource:
