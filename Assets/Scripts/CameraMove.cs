@@ -28,21 +28,29 @@ public class CameraMove : MonoBehaviour
 
     private void ObjectInvisible()
     {
-        Vector3 angle = transform.forward;
         Vector3 pos = transform.position;
+        Vector3 angle = (player.transform.position - transform.position).normalized;
         float distance = Vector3.Distance(player.position, pos);
 
 
         Debug.DrawRay(pos, angle, Color.green, 0.1f);
 
-        RaycastHit ray;
+        RaycastHit hit;
 
-        if (Physics.Raycast(pos, angle, out ray, distance, LayerMask.GetMask("Object")))
+        if (Physics.Raycast(pos, angle, out hit, distance, LayerMask.GetMask("Object")))
         {
-            GameObject touchedObject = ray.collider.gameObject;
-            Renderer renderer = touchedObject.GetComponent<Renderer>();
 
-            renderer.enabled = false;
+            GameObject touchedObject = hit.collider.gameObject;
+            Renderer hitRenderer = touchedObject.GetComponent<Renderer>();
+
+            StartCoroutine(HitDelay(hitRenderer));
+            hitRenderer.enabled = false;
         }
+    }
+    IEnumerator HitDelay(Renderer hitRenderer)
+    {
+        yield return new WaitForSeconds(2.4f);
+        hitRenderer.enabled = true;
+
     }
 }

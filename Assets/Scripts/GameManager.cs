@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             new Vector3(-101f, 0, 101f),
         };
 
-        player.speed = 10f;
+        player.speed = 13f;
     }
 
     private void CameraInit()
