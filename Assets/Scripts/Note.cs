@@ -13,4 +13,9 @@ public class Note : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
+    public void Update()    
+    {
+        transform.Rotate(0, Time.deltaTime * 88, 0);
+    }
 }

@@ -13,10 +13,10 @@ public class NoteManager : MonoBehaviour
         new Vector3(11, 2, -130),
         new Vector3(11, -0.195f, -125),
         new Vector3(11, 2, -120),
-        new Vector3(11, 2, -118),
-        new Vector3(11, -0.195f, -117),
         new Vector3(11, 2, -115),
-        new Vector3(11, 2, -110)
+        new Vector3(11, -0.195f, -110),
+        new Vector3(11, 2, -105),
+        new Vector3(11, 2, -100)
     };
 
     private List<int> notes = new List<int>{ 1, 2, 2, 1, 2, 2, 1, 2, 2, 1, 2, 2};
@@ -30,7 +30,7 @@ public class NoteManager : MonoBehaviour
     void Start()
     {
 
-        note = Resources.Load<GameObject>("Prefabs/Note/note");
+        note = Resources.Load<GameObject>("Prefabs/Note/SA_Item_Fish");
 
     }       
     
