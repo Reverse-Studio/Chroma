@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     {
         CameraMove cameraMove = Camera.main.gameObject.AddComponent<CameraMove>();
         cameraMove.player = player.transform;
+        cameraMove.speed = 5;
     }
 
     private void Update()

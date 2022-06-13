@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     public Transform player;
+    public float speed;
     private Vector3 ToGo;
 
     void Update()
@@ -15,13 +16,13 @@ public class CameraMove : MonoBehaviour
 
     private void Follow()
     {
-        float angle = (player.rotation.eulerAngles.y + 80) * Mathf.Deg2Rad;
+        float angle = (player.rotation.eulerAngles.y + 90) * Mathf.Deg2Rad;
 
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
 
         ToGo = player.position + new Vector3(y, 0.5f, x) * 20;
-        transform.position += (ToGo - transform.position) * Time.deltaTime;
+        transform.position += (ToGo - transform.position) * Time.deltaTime * speed;
 
         transform.LookAt(player);
     }
