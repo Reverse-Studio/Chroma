@@ -5,6 +5,7 @@ using UnityEngine;
 public class CameraMove : MonoBehaviour
 {
     public Transform player;
+    public float speed;
     private Vector3 ToGo;
 
     void Update()
@@ -15,13 +16,13 @@ public class CameraMove : MonoBehaviour
 
     private void Follow()
     {
-        float angle = (player.rotation.eulerAngles.y + 80) * Mathf.Deg2Rad;
+        float angle = (player.rotation.eulerAngles.y + 90) * Mathf.Deg2Rad;
 
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
 
         ToGo = player.position + new Vector3(y, 0.5f, x) * 20;
-        transform.position += (ToGo - transform.position) * Time.deltaTime;
+        transform.position += (ToGo - transform.position) * Time.deltaTime * speed;
 
         transform.LookAt(player);
     }
@@ -37,9 +38,8 @@ public class CameraMove : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(pos, angle, out hit, distance, LayerMask.GetMask("Object")))
+        if (Physics.Raycast(pos, angle, out hit, distance) && hit.transform.tag == "Object")
         {
-
             GameObject touchedObject = hit.collider.gameObject;
             Renderer hitRenderer = touchedObject.GetComponent<Renderer>();
 
@@ -51,6 +51,5 @@ public class CameraMove : MonoBehaviour
     {
         yield return new WaitForSeconds(2.4f);
         hitRenderer.enabled = true;
-
     }
 }
