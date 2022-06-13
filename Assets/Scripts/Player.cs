@@ -130,7 +130,7 @@ public class Player : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, LayerMask.GetMask("Floor")))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, LayerMask.GetMask("MiniMap")))
         {
             PlaneDistance = hit.distance;
         }
