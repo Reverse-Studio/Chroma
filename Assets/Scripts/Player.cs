@@ -9,6 +9,11 @@ public class Player : MonoBehaviour
     public int Health;
     private Animator animator;
     private Rigidbody rigid;
+    public float speed;
+    public Vector3[] ways;
+    private Queue<Vector3> waypoint;
+
+    private Vector3 point;
 
     //바닥과의 거리
     public float PlaneDistance
@@ -60,6 +65,15 @@ public class Player : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rigid = GetComponent<Rigidbody>();
+
+        waypoint = new Queue<Vector3>();
+
+        foreach (Vector3 way in ways)
+        {
+            waypoint.Enqueue(way);
+        }
+
+        point = waypoint.Dequeue();
     }
 
 
@@ -67,6 +81,39 @@ public class Player : MonoBehaviour
     {
         jump = Input.GetKey(KeyCode.UpArrow);
         roll = Input.GetKey(KeyCode.DownArrow);
+
+        float distance = Distance(transform.position, point);
+
+        if (distance < 1)
+        {
+            if (waypoint.Count != 0)
+            {
+                point = waypoint.Dequeue();
+            }
+            else
+            {
+                Destroy(this);
+            }
+        }
+
+        Vector3 to = transform.position - point;
+        to.y = 0;
+        to.Normalize();
+
+        float y = Mathf.Atan2(to.x, to.z) * Mathf.Rad2Deg - 180;
+
+        transform.rotation = Quaternion.Euler(0, y, 0);
+
+        to *= speed * Time.deltaTime;
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+    }
+
+    private float Distance(Vector3 from, Vector3 to)
+    {
+        float x = from.x - to.x;
+        float z = from.z - to.z;
+
+        return Mathf.Sqrt(x * x + z * z);
     }
 
     void FixedUpdate()
@@ -80,10 +127,10 @@ public class Player : MonoBehaviour
 
     private void Distancing()
     {
-        Debug.DrawRay(transform.position, Vector3.down, Color.green, 1f);
+        Debug.DrawRay(transform.position, Vector3.down, Color.green, 0.1f);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 100f, LayerMask.GetMask("Floor")))
         {
             PlaneDistance = hit.distance;
         }
