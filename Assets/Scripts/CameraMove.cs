@@ -37,9 +37,8 @@ public class CameraMove : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(pos, angle, out hit, distance, LayerMask.GetMask("Object")))
+        if (Physics.Raycast(pos, angle, out hit, distance) && hit.transform.tag == "Object")
         {
-
             GameObject touchedObject = hit.collider.gameObject;
             Renderer hitRenderer = touchedObject.GetComponent<Renderer>();
 
@@ -51,6 +50,5 @@ public class CameraMove : MonoBehaviour
     {
         yield return new WaitForSeconds(2.4f);
         hitRenderer.enabled = true;
-
     }
 }
