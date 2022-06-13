@@ -11,13 +11,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - PostProcess
+  - 
   - Water
   - UI
-  - Floor
-  - Object
   - 
+  - MiniMap
   - 
+  - Player
   - 
   - 
   - 

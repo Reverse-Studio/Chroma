@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public Player player;
     public NoteManager noteManager;
 
-    private void Start()
+    private void Awake()
     {
         PlayerInit();
         CameraInit();
