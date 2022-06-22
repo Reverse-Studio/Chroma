@@ -21,7 +21,7 @@ public class CameraMove : MonoBehaviour
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
 
-        ToGo = player.position + new Vector3(y, 0.5f, x) * 20;
+        ToGo = player.position + new Vector3(y, 0.1f, x) * 20;
         transform.position += (ToGo - transform.position) * Time.deltaTime * speed;
 
         transform.LookAt(player);

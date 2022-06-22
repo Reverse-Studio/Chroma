@@ -156,7 +156,6 @@ public class Player : MonoBehaviour
         if (IsRunning && roll && !IsRolling && !IsJumping)
         {
             animator.SetTrigger("DoSlide");
-            Debug.Log("ROLL!");
         }
     }
 }
