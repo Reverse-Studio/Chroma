@@ -90,10 +90,6 @@ public class Player : MonoBehaviour
             {
                 point = waypoint.Dequeue();
             }
-            else
-            {
-                Destroy(this);
-            }
         }
 
         Vector3 to = transform.position - point;
